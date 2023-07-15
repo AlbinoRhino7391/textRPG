@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-
+"""Michael
+    dict to store monsters"""
 monsters = {
     "Zombie": {
         "health": 22,
