@@ -60,7 +60,13 @@ def displayCharacterInfo():
     print("Damage:", damage)
 
 # --Eric--Game start
+# Initialize the character
 character_name, character_class, class_description, health, armor, damage = characterCreation()
+# Initialize the inventory
+player_inventory = {
+    "items": []
+}
+
 
 displayCharacterInfo()
 displayIntroduction()
