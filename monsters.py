@@ -5,7 +5,7 @@ monsters = {
     "Zombie": {
         "health": 22,
         "armor": 8,
-        "damage": "3d6"
+        "damage": "1d6"
     },
     "Skeleton": {
         "health": 13,
@@ -15,6 +15,16 @@ monsters = {
     "Kobold": {
         "health": 5,
         "armor": 12,
+        "damage": "1d4"
+    },
+    "Priest":{
+        "health": 0,
+        "armor": 0,
+        "damage": "1d4"
+    },
+    "Drow":{
+        "health": 0,
+        "armor": 0,
         "damage": "1d4"
     }
 }
