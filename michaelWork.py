@@ -33,6 +33,7 @@ def showInstructions():
         RPG Game
         ========
         Commands:
+          look ...
           go [direction]  
           get [item]
           inspect [item]
