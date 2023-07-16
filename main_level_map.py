@@ -7,7 +7,6 @@ main_floor = {
         "name": "Entrance",
         "description": "You stand at the entrance of the Unholy temple.",
         "north": "corridor1",
-        "items": []  # No items in the entrance room.
     },
     "corridor1": {
         "name": "Corridor 1",
@@ -15,7 +14,6 @@ main_floor = {
         "north": "corridor2",
         "east": "damp_room",  
         "south": "entrance",
-        "items": []  # No items in this room.
     },
     "corridor2": {
         "name": "Corridor 2",
@@ -24,7 +22,6 @@ main_floor = {
         "south": "corridor1",
         "east": "torture_chamber",
         "west": "chamber_of_remnants",
-        "items": []  # No items in this room.
     },
     "corridor3": {
         "name": "Corridor 3",
@@ -32,7 +29,6 @@ main_floor = {
         "north": "hall_of_mirrors",
         "west": "unholy_archives",
         "south": "corridor2",
-        "items": []  # No items in this room.
     },
     "hall_of_mirrors": {
         "name": "Hall of Mirrors",
@@ -41,20 +37,17 @@ main_floor = {
         "north": "summoning_chamber",
         "east": "corridor3",
         "south": "chamber_of_shadows",
-        "items": []  # No items in this room.
     },
     "altar_room": {
         "name": "Altar Room",
         "description": "You stand before the unholy altar where dark rituals take place.",
         "south": "hall_of_mirrors",
         "west": "library_of_forbbiden_knowledge",
-        "items": []  # No items in this room.
     },
     "damp_room": {
         "name": "Damp Room",
         "description": "The Damp Room is filled with an unsettling smell of mildew and dripping water.",
         "west": "corridor1",
-        "items": []  # No items in this room.
     },
     "torture_chamber" : {
         "name": "Torture Chamber",
