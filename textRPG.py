@@ -7,6 +7,8 @@ import os
 import time
 from character_classes import character_classes #import the dict of character classes
 from main_level_map import main_floor #import the dict for the main_floor
+from item_list import items #import items dict
+from command_list import command_list #import the command list
 
 def clear_screen():
     """Eric
@@ -21,7 +23,7 @@ def characterCreation():
     print("Let's begin by creating your character.")
     name = input("Enter your character's name: ")
 
-    print("Now, choose your character class:")
+    print("\nNow, choose your character class:")
     for class_key, class_data in character_classes.items():
         print(class_key + ". " + class_data["name"] + ": " + class_data["description"])
 
@@ -37,7 +39,7 @@ def displayIntroduction():
     """Eric
     Displays the introduction and premise of the game to the player.
     """
-    print(f"\n\nWelcome, {character_name} the {character_class}!")
+    print(f"\nWelcome, {character_name} the {character_class}!")
     print("You have received a quest about an evil priest being controlled by an Illithid.")
     print("Your mission is to venture into the Unholy temple and put an end to their dark alliance.")
     print("Prepare yourself for a treacherous journey filled with danger and secrets!\n")
@@ -45,10 +47,9 @@ def displayIntroduction():
 def displayCommandList():
     """Eric
     Display the available commands to the player."""
-    print("Available commands:")
-    print("  look: Display available directions.")
-    print("  go <direction>: Move to a new location (e.g., go north).")
-    print("  exit: Quit the game.\n")
+    print("\nAvailable commands:")
+    for command in command_list:
+        print("-", command)
 
 def displayCharacterInfo():
     # --Eric--Display character information
@@ -58,6 +59,54 @@ def displayCharacterInfo():
     print("Health:", health)
     print("Armor:", armor)
     print("Damage:", damage)
+
+def search_room(current_room):
+    # Eric -- Function to search the current room for items
+    items_in_room = main_floor[current_room]["items"]
+    if items_in_room:
+        print(f"You search the {main_floor[current_room]['name']} and find the following items:")
+        for item in items_in_room:
+            print(f"- {item}")
+    else:
+        print("You search the room but find no items.")
+
+def get_item(current_room, item_name):
+    # Eric -- Function to get an item from the room and add it to the player's inventory
+    items_in_room = main_floor[current_room]["items"]
+    if item_name in items_in_room:
+        player_inventory["items"].append(item_name)
+        items_in_room.remove(item_name)
+        print(f"You pick up the {item_name} and add it to your inventory.")
+    else:
+        print("The item is not in this room.")
+
+def inspect_item(item_name):
+    # Eric -- Function to inspect an item in the player's inventory
+    if item_name in player_inventory["items"]:
+        item_description = items[item_name]["description"]
+        print(f"You inspect the {item_name}: {item_description}")
+    else:
+        print("You don't have that item in your inventory.")
+
+def use_item(item_name):
+    # Eric -- Function to use a consumable item from the player's inventory
+    if item_name in player_inventory["items"]:
+        if items[item_name]["consumable"]:
+            player_inventory["items"].remove(item_name)
+            print(f"You use the {item_name}.")
+        else:
+            print("You can't use that item.")
+    else:
+        print("You don't have that item in your inventory.")
+
+def displayInventory():
+    # Eric -- Function to display the player's current inventory
+    if player_inventory["items"]:
+        print("Your Inventory:")
+        for item in player_inventory["items"]:
+            print("- " + item)
+    else:
+        print("Your inventory is empty.")
 
 # --Eric--Game start
 # Initialize the character
@@ -78,11 +127,6 @@ current_location = "entrance"
 first_time_in_entrance = True
 
 while True:
-    # Clear the screen after the first time the player leaves the entrance
-    if not first_time_in_entrance:
-        time.sleep(1)  # Add a 1-second delay
-        clear_screen()
-
     # Display the current location's name and description
     location = main_floor[current_location]
     print(f"\n{location['name']}")
@@ -92,12 +136,13 @@ while True:
     if current_location != "entrance":
         first_time_in_entrance = False
 
-    # Display the available commands
+    # Display the available commands and inventory
     displayCommandList()
+    displayInventory()
 
     # Get available directions to move from the current location
     available_directions = [direction for direction in location if direction not in ["name", "description"]]
-    
+
     # Ask the player for their next move
     next_move = input("Enter your command: ")
 
@@ -107,8 +152,23 @@ while True:
         break
 
     # Check if the player wants to look at available directions
-    if next_move.lower() == "look":
+    elif next_move.lower() == "look":
         print("Available directions:", ", ".join(available_directions))
+
+    # Handle the inventory commands
+    elif next_move.lower() == "search":
+        search_room(current_location)
+    elif next_move.lower().startswith("get "):
+        item_name = next_move.split(" ", 1)[1]
+        get_item(current_location, item_name)
+    elif next_move.lower().startswith("inspect "):
+        item_name = next_move.split(" ", 1)[1]
+        inspect_item(item_name)
+    elif next_move.lower().startswith("use "):
+        item_name = next_move.split(" ", 1)[1]
+        use_item(item_name)
+
+    # Check if the player wants to move to another location
     elif next_move.startswith("go "):
         # Extract the direction from the command
         direction = next_move.split(" ", 1)[1]
@@ -116,7 +176,13 @@ while True:
         if direction in available_directions:
             # Move the player to the next location
             current_location = location[direction]
+            # Clear the screen after moving to a new location
+            if not first_time_in_entrance:
+                time.sleep(1)  # Add a 1-second delay
+                clear_screen()
         else:
             print("Invalid direction. Please choose a valid direction.")
+
+    # Handle other invalid commands
     else:
         print("Invalid command. Please enter a valid command.")
