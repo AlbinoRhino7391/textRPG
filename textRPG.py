@@ -50,22 +50,25 @@ def displayCommandList():
     print("  go <direction>: Move to a new location (e.g., go north).")
     print("  exit: Quit the game.\n")
 
+def displayCharacterInfo():
+    # --Eric--Display character information
+    print("\n\nCharacter Name:", character_name)
+    print("Character Class:", character_class)
+    print("Class Description:", class_description)
+    print("Health:", health)
+    print("Armor:", armor)
+    print("Damage:", damage)
+
 # --Eric--Game start
 character_name, character_class, class_description, health, armor, damage = characterCreation()
 
-# --Eric--Display character information
-print("\n\nCharacter Name:", character_name)
-print("Character Class:", character_class)
-print("Class Description:", class_description)
-print("Health:", health)
-print("Armor:", armor)
-print("Damage:", damage)
+displayCharacterInfo()
 displayIntroduction()
 
 # --Eric--Initialize the current_location to "entrance" where the character starts
 current_location = "entrance"
 
-# Game loop --both Eric and Michael
+# Game loop --WonderTwins
 first_time_in_entrance = True
 
 while True:
