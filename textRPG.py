@@ -136,15 +136,16 @@ while True:
     if current_location != "entrance":
         first_time_in_entrance = False
 
-    # Display the available commands and inventory
-    displayCommandList()
-    displayInventory()
-
     # Get available directions to move from the current location
     available_directions = [direction for direction in location if direction not in ["name", "description"]]
 
     # Ask the player for their next move
+    print("enter 'help' to show command list.")
     next_move = input("Enter your command: ")
+    if next_move.lower() == "help":
+         # Display the available commands and inventory if the player asks for help
+        displayCommandList()
+        displayInventory()
 
     # Check if the player wants to exit the game
     if next_move.lower() == "exit":
