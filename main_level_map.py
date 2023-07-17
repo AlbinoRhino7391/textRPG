@@ -26,7 +26,7 @@ main_floor = {
         "east": "torture_chamber",
         "west": "chamber_of_remnants",
         "items": [],  # No items in the entrance room.
-        "monster": "Skeleton"
+        "monster": "Zombie"
     },
     "corridor3": {
         "name": "Corridor 3",

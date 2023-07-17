@@ -6,15 +6,13 @@ from character_classes import skills  # import the dict of skills
 from main_level_map import main_floor  # import the dict for the main_floor
 from item_list import items  # import items dict
 from command_list import command_list  # import the command list
-from combat import monsterCheck
+from combat import *
 from monsters import monsters
-
 
 def clear_screen():
     """Eric
     Clear the screen based on the operating system."""
-    os.system("cls" if os.name == "nt" else "clear")
-
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def characterCreation():
     """Eric
@@ -34,31 +32,16 @@ def characterCreation():
     selected_class = character_classes.get(class_choice)
 
     # Return the character's name, class choice, and class attributes
-    return (
-        name,
-        selected_class["name"],
-        selected_class["description"],
-        selected_class["health"],
-        selected_class["armor"],
-        selected_class["damage"],
-    )
-
+    return name, selected_class["name"], selected_class["description"], selected_class["health"], selected_class["armor"], selected_class["damage"]
 
 def displayIntroduction():
     """Eric
     Displays the introduction and premise of the game to the player.
     """
     print(f"\nWelcome, {character_name} the {character_class}!")
-    print(
-        "You have received a quest about an evil priest being controlled by an Illithid."
-    )
-    print(
-        "Your mission is to venture into the Unholy temple and put an end to their dark alliance."
-    )
-    print(
-        "Prepare yourself for a treacherous journey filled with danger and secrets!\n"
-    )
-
+    print("You have received a quest about an evil priest being controlled by an Illithid.")
+    print("Your mission is to venture into the Unholy temple and put an end to their dark alliance.")
+    print("Prepare yourself for a treacherous journey filled with danger and secrets!\n")
 
 def displayCommandList():
     """Eric
@@ -66,7 +49,6 @@ def displayCommandList():
     print("\nAvailable commands:")
     for command in command_list:
         print("-", command)
-
 
 def displayCharacterInfo():
     # --Eric--Display character information
@@ -77,19 +59,15 @@ def displayCharacterInfo():
     print("Armor:", armor)
     print("Damage:", damage)
 
-
 def search_room(current_room):
     # Eric -- Function to search the current room for items
     items_in_room = main_floor[current_room]["items"]
     if items_in_room:
-        print(
-            f"You search the {main_floor[current_room]['name']} and find the following items:"
-        )
+        print(f"You search the {main_floor[current_room]['name']} and find the following items:")
         for item in items_in_room:
             print(f"- {item}")
     else:
         print("You search the room but find no items.")
-
 
 def get_item(current_room, item_name):
     # Eric -- Function to get an item from the room and add it to the player's inventory
@@ -101,7 +79,6 @@ def get_item(current_room, item_name):
     else:
         print("The item is not in this room.")
 
-
 def inspect_item(item_name):
     # Eric -- Function to inspect an item in the player's inventory
     if item_name in player_inventory["items"]:
@@ -109,7 +86,6 @@ def inspect_item(item_name):
         print(f"You inspect the {item_name}: {item_description}")
     else:
         print("You don't have that item in your inventory.")
-
 
 def use_item(item_name):
     # Eric -- Function to use a consumable item from the player's inventory
@@ -122,7 +98,6 @@ def use_item(item_name):
     else:
         print("You don't have that item in your inventory.")
 
-
 def displayInventory():
     # Eric -- Function to display the player's current inventory
     if player_inventory["items"]:
@@ -132,19 +107,24 @@ def displayInventory():
     else:
         print("Your inventory is empty.")
 
+def check_for_monster(current_room, player_class, player_health):
+    # --Michael: check if a monster is in the room:
+    if "monster" in main_floor[current_room]:
+        monster_name = main_floor[current_room]["monster"]
+        combat(monster_name, player_class, player_health)
+        del main_floor[current_room]["monster"]
+        # else:
+        #     print("Invalid character class.")
+    else:
+        print("No monster in this room")
 
 # --Eric--Game start
 # Initialize the character
-(
-    character_name,
-    character_class,
-    class_description,
-    health,
-    armor,
-    damage,
-) = characterCreation()
+character_name, character_class, class_description, health, armor, damage = characterCreation()
 # Initialize the inventory
-player_inventory = {"items": []}
+player_inventory = {
+    "items": []
+}
 
 
 displayCharacterInfo()
@@ -160,33 +140,22 @@ while True:
     # Display the current location's name and description
     location = main_floor[current_location]
     print(f"\n{location['name']}")
-    print(location["description"])
-    
-    # Michael check for monsters in the room
-    if "monster" in location:
-        monster_name = location["monster"]
-        monster = monsters[monster_name]
-        print("A", monster_name, "appears!")
-        print("Monster Name:", monster_name)
-        print("Health:", monster["health"])
-        print("Armor:", monster["armor"])
-        print("Damage:", monster["damage"])
+    print(location['description'])
 
     # Set the flag to False after leaving the entrance for the first time
     if current_location != "entrance":
         first_time_in_entrance = False
 
-    # Display the available commands and inventory
-    displayCommandList()
-    displayInventory()
-
     # Get available directions to move from the current location
-    available_directions = [
-        direction for direction in location if direction not in ["name", "description"]
-    ]
+    available_directions = [direction for direction in location if direction not in ["name", "description"]]
 
     # Ask the player for their next move
+    print("enter 'help' to show command list.")
     next_move = input("Enter your command: ")
+    if next_move.lower() == "help":
+         # Display the available commands and inventory if the player asks for help
+        displayCommandList()
+        displayInventory()
 
     # Check if the player wants to exit the game
     if next_move.lower() == "exit":
@@ -218,7 +187,15 @@ while True:
         if direction in available_directions:
             # Move the player to the next location
             current_location = location[direction]
-
+            # Michael -- check for monster which if present, will begin combat()
+            player_health = None
+            for class_data in character_classes.values():
+                if class_data["name"] == character_class:
+                    player_health = [class_data["health"]]  # Wrap player_health in a list
+                    break
+            if player_health is None:
+                print("Invalid character class")
+            check_for_monster(current_location, character_class, player_health)
             # Clear the screen after moving to a new location
             if not first_time_in_entrance:
                 time.sleep(1)  # Add a 1-second delay
