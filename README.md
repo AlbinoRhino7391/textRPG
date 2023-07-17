@@ -1,1 +1,1 @@
-# textRPG
+# textRPG.py is main file

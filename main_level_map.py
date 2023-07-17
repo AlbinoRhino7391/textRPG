@@ -14,6 +14,7 @@ main_floor = {
         "north": "corridor2",
         "east": "damp_room",  
         "south": "entrance",
+        "monster": "Zombie"
     },
     "corridor2": {
         "name": "Corridor 2",
@@ -22,6 +23,7 @@ main_floor = {
         "south": "corridor1",
         "east": "torture_chamber",
         "west": "chamber_of_remnants",
+        "monster": "Skeleton"
     },
     "corridor3": {
         "name": "Corridor 3",
