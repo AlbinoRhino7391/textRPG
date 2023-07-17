@@ -113,13 +113,13 @@ def displayInventory():
 
 def check_for_monster(current_room, player_class, player_health):
     # --Michael: check if a monster is in the room:
-    if "monster" in main_floor[current_room]:
-        monster_name = main_floor[current_room]["monster"]
-        combat(monster_name, player_class, player_health)
-        del main_floor[current_room]["monster"]
-        # else:
-        #     print("Invalid character class.")
+    player_health = health  # set player_health used in this function to the health from the class
+    if "monster" in main_floor[current_room]:  # if a "monster" exists in the current room
+        monster_name = main_floor[current_room]["monster"]  # set monster_name to "monster" value from dict
+        combat(monster_name, player_class, player_health)  # run the combat function
+        del main_floor[current_room]["monster"]     # delete the monster from the room in the dict
     else:
+        # if no monster in the room
         print("No monster in this room")
 
 # --Eric--Game start
@@ -191,7 +191,8 @@ while True:
         if direction in available_directions:
             # Move the player to the next location
             current_location = location[direction]
-            # Michael -- check for monster which if present, will begin combat()
+            # Michael 
+            # -- check for monster which if present, will begin combat()
             player_health = None
             for class_data in character_classes.values():
                 if class_data["name"] == character_class:

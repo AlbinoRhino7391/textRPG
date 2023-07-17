@@ -13,26 +13,26 @@ import os
 
 # combat function to be imported and used in main file
 def combat(monster_name, character_class, player_health):    #----------Will need to make adjustments when not hard coding
-    player_health = None
-    for class_data in character_classes.values():
-        if class_data["name"] == character_class:
-            player_health = class_data["health"]
-            break
     if player_health is None:
         print("Invalid character class")
         return
     
+    # extract player's health from the list
+    # player_health = player_health[0]
+
+    # Convert player_health from a list to an int
+    # player_health = int(player_health)
+    
     monster = monsters[monster_name]        # setting local monster to name from monsters dict
     monster_health = monster["health"]      # setting monster health from monsters dict
     # player_health = character_classes[character_class]["health"]           #----------Will need to make adjustments when not hard coding
-
     # show the user a monster appears in the room and ask for their action
     print(f"A {monster_name} appears! What do you want to do?")
     while True:     # start loop for encounter
         # ask player to choose to fight or run. Only valid input accepted
         choice = input("1. Fight\n2. Run\nEnter your choice: ")
         if choice == "1":
-            fight(monster_name, monster_health, player_health)  # begin fight function
+            player_health = fight(monster_name, monster_health, player_health)  # begin fight function
             break                  # if fight function concludes, break out of this while loop
         elif choice == "2":
             run(monster_name, monster_health, player_health)     # begin run function
@@ -60,7 +60,6 @@ def fight(monster_name, monster_health, player_health):
         choice = input("\n1. Attack\n2. Run\nEnter your choice: ")
         if choice == "1":
             monster = monsters[monster_name]
-            
             # if attack, roll 1d20 to see if the player hits
             hit_roll = roll("1d20")
             # display your hit roll
@@ -91,7 +90,7 @@ def fight(monster_name, monster_health, player_health):
             print("Invalid choice. Please choose a valid option.")
         # after a 1 second delay, the monster takes his turn
         time.sleep(1)
-        monsterAttack(monster_name, monster_health, player_health)
+        player_health = monsterAttack(monster_name, monster_health, player_health)
 
 # function for if the player chooses run at anytime during combat
 def run(monster_name, monster_health, player_health):
@@ -130,6 +129,8 @@ def monsterAttack(monster_name, monster_health, player_health):
         else:
             # if the player is still alive, display player health
             print(f"Your health: {player_health}\n")      
+        # return updated player health
+        return player_health
 
 # Currently hard coded to test function and ensure this file is working as intented
 #------- this will instead pull monster_name from current_room["monster"] once imported in main file
