@@ -51,7 +51,7 @@ main_floor = {
     },
     "torture_chamber" : {
         "name": "Torture Chamber",
-        "description": "You enter the Torture Chamber, filled with grim devices and instruments of torment.",
+        "description": "You enter the Torture Chamber, filled with grim devices and instruments of torment, You see a portrait of what seems to be a german aristocrat with a small mustache barely passing the flares of his nostrils.",
         "west": "corridor2", 
         "north": "chamber_of_despair",
         "items": ["pineapple"]  # The Torture Chamber has a pineapple.
