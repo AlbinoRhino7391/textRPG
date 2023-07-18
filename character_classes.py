@@ -33,16 +33,15 @@ character_classes = {
 
 skills = {
     "Power Attack": {
-        "damage": 3,
-        "description": "power attack text"
+        "damage": 8,
+        "description": "You attack with the fury of the Gods"
     },
     "Magic Missile": {
         "damage": 12,
-        "description": "magic missile text"
+        "description": "You smile as you send 3 glowing darts foward at lightning speed"
     },
     "Backstab": {
-        "damage": 5,
-        "description": "Backstab text"
+        "damage": 10,
+        "description": "You roll deftly around your target digging your blade in their back"
     }
 }
-

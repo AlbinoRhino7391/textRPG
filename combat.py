@@ -4,11 +4,12 @@
 
 from monsters import monsters
 from character_classes import character_classes
+from character_classes import skills
 import random
 import time
 
 # combat function to be imported and used in main file
-def combat(monster_name, player_health: int, armor, damage): 
+def combat(monster_name, player_health: int, armor, damage, skill): 
     monster = monsters[monster_name]        # setting local monster to name from monsters dict
     monster_health = monster["health"]      # setting monster health from monsters dict
     
@@ -22,7 +23,7 @@ def combat(monster_name, player_health: int, armor, damage):
         # if 1(fight) is chosen
         if choice == "1":
             # start the fight function and return player health
-            player_health = fight(monster_name, monster_health, player_health, armor, damage)
+            player_health = fight(monster_name, monster_health, player_health, armor, damage, skill)
             break  # if fight function concludes, break out of this while loop, ending the encounter
         # if 2(run) is chosen
         elif choice == "2":
@@ -43,7 +44,7 @@ def roll(dice):     # will input dice as "1d20", "2d4", "2d6", etc...
     return total    # return the total
 
 # player turn fight function inside of combat
-def fight(monster_name, monster_health, player_health, armor, damage):
+def fight(monster_name, monster_health, player_health, armor, damage, skill):
     # while both player and monster are still alive
     while monster_health > 0 and player_health > 0:
         time.sleep(1)           # after a 2 second delay
@@ -52,7 +53,7 @@ def fight(monster_name, monster_health, player_health, armor, damage):
         print(f"{monster_name}'s health: {monster_health}") # display monster's current health
         
         # ask the player if they want to attack or try to run(during combat)
-        choice = input("\n1. Attack\n2. Run\nEnter your choice: ")  #----------Need to add 3. Use Skill
+        choice = input("\n1. Attack\n2. Run\n3. Use Skill\nEnter your choice: ")
         if choice == "1":
             monster = monsters[monster_name]
             # if attack, roll 1d20 to see if the player hits
@@ -84,6 +85,11 @@ def fight(monster_name, monster_health, player_health, armor, damage):
         elif choice == "2":
             run(monster_name, monster_health, player_health, armor, damage)
             break   # if you succeed, break out of loop
+        elif choice == "3":
+            skill_damage, skill_description = useSkill(skill)
+            print(f"{skill_description} doing {skill_damage} points of damage damage!")
+            monster_health -= skill_damage
+            time.sleep(1)
         else:
             # check for invalid input
             print("Invalid choice. Please choose a valid option.")
@@ -93,7 +99,7 @@ def fight(monster_name, monster_health, player_health, armor, damage):
     return player_health
 
 # function for if the player chooses run at anytime during combat
-def run(monster_name, monster_health, player_health, armor, damage):
+def run(monster_name, monster_health, player_health, armor, damage, skill):
     # roll 1d20 to see if you succeed
     run_roll = roll("1d20")
     # gives a 50% chance to run
@@ -106,8 +112,15 @@ def run(monster_name, monster_health, player_health, armor, damage):
         time.sleep(1)
         monsterAttack(monster_name, monster_health, player_health, armor, damage)
         # after the monster attacks, begin the normal fight() function
-        player_health = fight(monster_name, monster_health, player_health, armor, damage)
+        player_health = fight(monster_name, monster_health, player_health, armor, damage, skill)
     return player_health
+
+# Use Skill function to check the damage value from the skills dict in character_classes file
+def useSkill(skill):
+    if skill in skills:
+        return skills[skill]["damage"], skills[skill]["description"]
+    else:
+        return 0
 
 # monster's turn attack function 
 def monsterAttack(monster_name, monster_health, player_health, armor, damage):
