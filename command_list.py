@@ -9,5 +9,5 @@ command_list = [
     "get [item] - Pick up an item from the current room and add it to your inventory.",
     "inspect [item] - View the description of an item in your inventory.",
     "use [item] - Use a consumable item from your inventory.",
-    "quit - Exit the game."
+    "exit - Exit the game."
 ]
