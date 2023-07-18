@@ -14,6 +14,7 @@ def combat(monster_name, player_health: int, armor, damage, skill):
     monster_health = monster["health"]      # setting monster health from monsters dict
     
     # show the user a monster appears in the room and ask for their action
+    print("=====================")
     print(f"A {monster_name} appears! What do you want to do?")
     
     # loop for the entire encounter
@@ -28,7 +29,7 @@ def combat(monster_name, player_health: int, armor, damage, skill):
         # if 2(run) is chosen
         elif choice == "2":
             # begin the run() function
-            run(monster_name, monster_health, player_health, armor, damage)
+            run(monster_name, monster_health, player_health, armor, damage, skill)
             break # if run function concludes, break out of this while loop, ending the encounter
         # if an invalid input is used, continue asking
         else:
@@ -49,10 +50,13 @@ def fight(monster_name, monster_health, player_health, armor, damage, skill):
     while monster_health > 0 and player_health > 0:
         time.sleep(1)           # after a 2 second delay
         # os.system('clear')      # clear the screen
+        print("========================")
         print("Your health:", player_health)    # display player's current health
         print(f"{monster_name}'s health: {monster_health}") # display monster's current health
+        print("------------------------")
         
         # ask the player if they want to attack or try to run(during combat)
+        print("What do you want to do?")
         choice = input("\n1. Attack\n2. Run\n3. Use Skill\nEnter your choice: ")
         if choice == "1":
             monster = monsters[monster_name]
@@ -83,7 +87,7 @@ def fight(monster_name, monster_health, player_health, armor, damage, skill):
                 time.sleep(1)
         # if you choose run, execute run() function
         elif choice == "2":
-            run(monster_name, monster_health, player_health, armor, damage)
+            run(monster_name, monster_health, player_health, armor, damage, skill)
             break   # if you succeed, break out of loop
         elif choice == "3":
             skill_damage, skill_description = useSkill(skill)
