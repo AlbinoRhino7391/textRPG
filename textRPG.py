@@ -36,7 +36,7 @@ def characterCreation():
     selected_class = character_classes.get(class_choice)
 
     # Return the character's name, class choice, and class attributes
-    return name, selected_class["name"], selected_class["description"], selected_class["health"], selected_class["armor"], selected_class["damage"]
+    return name, selected_class["name"], selected_class["description"], selected_class["health"], selected_class["armor"], selected_class["damage"], selected_class["skill"]
 
 def displayIntroduction():
     """Eric
@@ -62,6 +62,7 @@ def displayCharacterInfo():
     print("Health:", health)
     print("Armor:", armor)
     print("Damage:", damage)
+    print("Skill:", skill)
 
 def search_room(current_room):
     # Eric -- Function to search the current room for items
@@ -118,7 +119,7 @@ def check_for_monster(current_location):
 
 # --Eric--Game start
 # Initialize the character
-character_name, character_class, class_description, health, armor, damage = characterCreation()
+character_name, character_class, class_description, health, armor, damage, skill = characterCreation()
 # Initialize the inventory
 player_inventory = {
     "items": []
@@ -194,10 +195,8 @@ while True:
             # Michael 
             # -- check for monster which if present, will begin combat()
             monster_name = check_for_monster(current_location)
-            print("Before combat player health:" + str(health))
             if monster_name:
-                health = combat(monster_name, health, armor, damage)
-                print("After combat: " + str(health))
+                health = combat(monster_name, health, armor, damage, skill)
 
             # Eric: Clear the screen after moving to a new location
             if not first_time_in_entrance:
