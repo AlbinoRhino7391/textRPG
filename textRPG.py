@@ -111,16 +111,10 @@ def displayInventory():
     else:
         print("Your inventory is empty.")
 
-def check_for_monster(current_room, player_class, player_health):
+def check_for_monster(current_location):
     # --Michael: check if a monster is in the room:
-    player_health = health  # set player_health used in this function to the health from the class
-    if "monster" in main_floor[current_room]:  # if a "monster" exists in the current room
-        monster_name = main_floor[current_room]["monster"]  # set monster_name to "monster" value from dict
-        combat(monster_name, player_class, player_health)  # run the combat function
-        del main_floor[current_room]["monster"]     # delete the monster from the room in the dict
-    else:
-        # if no monster in the room
-        print("No monster in this room")
+    if "monster" in main_floor[current_location]:
+        return main_floor[current_location]["monster"]  # if a monster is present, return it
 
 # --Eric--Game start
 # Initialize the character
@@ -143,6 +137,11 @@ first_time_in_entrance = True
 while True:
     # Display the current location's name and description
     location = main_floor[current_location]
+    
+    # Michael: Check to see if player is still alive
+    if health < 1:
+        break  # if player has less than 1 health, Game Over!
+    
     print(f"\n{location['name']}")
     print(location['description'])
 
@@ -191,17 +190,16 @@ while True:
         if direction in available_directions:
             # Move the player to the next location
             current_location = location[direction]
+            
             # Michael 
             # -- check for monster which if present, will begin combat()
-            player_health = None
-            for class_data in character_classes.values():
-                if class_data["name"] == character_class:
-                    player_health = [class_data["health"]]  # Wrap player_health in a list
-                    break
-            if player_health is None:
-                print("Invalid character class")
-            check_for_monster(current_location, character_class, player_health)
-            # Clear the screen after moving to a new location
+            monster_name = check_for_monster(current_location)
+            print("Before combat player health:" + str(health))
+            if monster_name:
+                health = combat(monster_name, health, armor, damage)
+                print("After combat: " + str(health))
+
+            # Eric: Clear the screen after moving to a new location
             if not first_time_in_entrance:
                 time.sleep(1)  # Add a 1-second delay
                 clear_screen()

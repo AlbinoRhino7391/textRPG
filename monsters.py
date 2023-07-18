@@ -5,7 +5,7 @@ monsters = {
     "Zombie": {
         "health": 22,
         "armor": 8,
-        "damage": "1d6"
+        "damage": "1d6"  
     },
     "Skeleton": {
         "health": 13,
