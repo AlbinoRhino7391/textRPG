@@ -16,7 +16,7 @@ main_floor = {
         "east": "damp_room",  
         "south": "entrance",
         "items": [],  # No items in the entrance room.
-        "monster": "Zombie"
+        "monster": "Kobold"
     },
     "corridor2": {
         "name": "Corridor 2",
@@ -26,7 +26,7 @@ main_floor = {
         "east": "torture_chamber",
         "west": "chamber_of_remnants",
         "items": [],  # No items in the entrance room.
-        "monster": "Zombie"
+        "monster": "Skeleton"
     },
     "corridor3": {
         "name": "Corridor 3",
@@ -50,7 +50,8 @@ main_floor = {
         "description": "You stand before the unholy altar where dark rituals take place.",
         "south": "hall_of_mirrors",
         "west": "library_of_forbbiden_knowledge",
-        "items": []  # No items in the entrance room.
+        "items": [],  # No items in the entrance room.
+        "monster": "Priest"
     },
     "damp_room": {
         "name": "Damp Room",
@@ -69,7 +70,8 @@ main_floor = {
         "name": "Chamber of Despair",
         "description": "You step into the Chamber of Despair, where tormented souls cry out in anguish.",
         "south": "torture_chamber",
-        "items": ["acid"]  # The Chamber of Despair has an acid vial.
+        "items": ["acid"],  # The Chamber of Despair has an acid vial.
+        "monster": "Zombie"
     },
     "chamber_of_remnants" : {
         "name": "Chamber of Remnants",
@@ -77,7 +79,8 @@ main_floor = {
         "east": "corridor2",
         "south": "meditation_chamber",
         "north": "unholy_archives",
-        "items": ["map"]  # The Chamber of Remnants has a map.
+        "items": ["map"],  # The Chamber of Remnants has a map.
+        "monster": "Skeleton"
     },
     "meditation_chamber" : {
         "name": "Meditation Chamber",
@@ -91,39 +94,45 @@ main_floor = {
         "north": "chamber_of_shadows",
         "east": "corridor3",
         "south": "chamber_of_remnants",
-        "items": ["potion"]  # The Unholy Archives has a potion.
+        "items": ["potion"],  # The Unholy Archives has a potion.
+        "monster": "Zombie"
     },
     "chamber_of_shadows" : {
         "name": "Chamber of Shadows",
         "description": "You stand in the Chamber of Shadows, shrouded in darkness and mystery.",
         "east": "hall_of_mirrors",
         "south": "unholy_archives",
-        "items": ["cloak"]  # The Chamber of Shadows has a cloak.
+        "items": ["cloak"],  # The Chamber of Shadows has a cloak.
+        "monster": "Kobold"
     },
     "summoning_chamber" : {
         "name": "Summoning Chamber",
         "description": "You enter the Summoning Chamber, a place where dark entities are conjured.",
         "west": "hall_of_mirrors",
         "north": "ritual_bath",
-        "items": ["key"]  # The Summoning Chamber has a key.
+        "items": ["key"],  # The Summoning Chamber has a key.
+        "monster": "Drow"
     },
     "ritual_bath" : {
         "name": "Ritual Bath",
         "description": "You arrive at the Ritual Bath, a sacred space for pre-ritual cleansing.",
         "east": "sacrificial_chamber",
         "south": "summoning_chamber",
-        "items": ["acid"]  # The Ritual Bath has an acid vial.
+        "items": ["acid"],  # The Ritual Bath has an acid vial.
+        "monster": "Kobold"
     },
     "sacrificial_chamber" : {
         "name": "Sacrificial Chamber",
         "description": "You step into the Sacrificial Chamber, where dark offerings are made.",
         "west": "ritual_bath",
-        "items": ["potion"]  # The Sacrificial Chamber has a potion.
+        "items": ["potion"],  # The Sacrificial Chamber has a potion.
+        "monster": "Zombie"
     },
     "crypt" : {
         "name": "Crypt",
         "description": "You find yourself in the Crypt, where the remains of the deceased rest in eternal darkness.",
-        "north": "damp_room"
+        "north": "damp_room",
+        "monster": "Illithid"
     },
     "library_of_forbbiden_knowledge" : {
         "name": "Library of Forbidden Knowledge",
