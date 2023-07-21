@@ -18,13 +18,18 @@ monsters = {
         "damage": "1d4"
     },
     "Priest":{
-        "health": 0,
-        "armor": 0,
-        "damage": "1d4"
+        "health": 20,
+        "armor": 13,
+        "damage": "1d6"
     },
     "Drow":{
-        "health": 0,
-        "armor": 0,
-        "damage": "1d4"
+        "health": 24,
+        "armor": 15,
+        "damage": "1d6"
+    }, 
+    "Illithid":{
+        "health": 71,
+        "armor": 15,
+        "damage": "2d10"
     }
 }
